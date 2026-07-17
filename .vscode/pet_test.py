@@ -63,30 +63,77 @@ def draw_action_boxes():
 
 def draw_food_icon(x, y):
     display.set_pen(BLACK)
-    display.circle(x + 26, y + 25, 12)
+
+    # Handle
+    display.rectangle(x + 23, y + 23, 6, 18)
+
+    # Fork head
+    display.rectangle(x + 17, y + 12, 18, 12)
+
+    # Gaps between prongs
+    display.set_pen(LIGHT_GREY)
+    display.rectangle(x + 20, y + 10, 3, 11)
+    display.rectangle(x + 25, y + 10, 3, 11)
+    display.rectangle(x + 30, y + 10, 3, 11)
 
 
 def draw_play_icon(x, y):
     display.set_pen(BLACK)
-    display.line(x + 26, y + 10, x + 12, y + 38)
-    display.line(x + 12, y + 38, x + 40, y + 38)
-    display.line(x + 40, y + 38, x + 26, y + 10)
+
+    # Left end
+    display.circle(x + 15, y + 21, 5)
+    display.circle(x + 15, y + 29, 5)
+
+    # Right end
+    display.circle(x + 37, y + 21, 5)
+    display.circle(x + 37, y + 29, 5)
+
+    # Middle shaft
+    display.rectangle(x + 15, y + 21, 22, 8)
 
 
 def draw_clean_icon(x, y):
     display.set_pen(BLACK)
-    display.rectangle(x + 14, y + 13, 24, 24)
+
+    # Shower head
+    display.rectangle(x + 14, y + 15, 24, 7)
+
+    # Curved-ish top using lines
+    display.line(x + 17, y + 15, x + 20, y + 10)
+    display.line(x + 20, y + 10, x + 32, y + 10)
+    display.line(x + 32, y + 10, x + 35, y + 15)
+
+    # Water drops
+    display.line(x + 18, y + 27, x + 16, y + 33)
+    display.line(x + 16, y + 33, x + 18, y + 36)
+    display.line(x + 18, y + 36, x + 20, y + 33)
+
+    display.line(x + 26, y + 25, x + 24, y + 31)
+    display.line(x + 24, y + 31, x + 26, y + 34)
+    display.line(x + 26, y + 34, x + 28, y + 31)
+
+    display.line(x + 34, y + 27, x + 32, y + 33)
+    display.line(x + 32, y + 33, x + 34, y + 36)
+    display.line(x + 34, y + 36, x + 36, y + 33)
 
 
 def draw_sleep_icon(x, y):
+    # Crescent moon
     display.set_pen(BLACK)
-    display.rectangle(x + 10, y + 17, 32, 18)
+    display.circle(x + 27, y + 25, 15)
+
+    display.set_pen(LIGHT_GREY)
+    display.circle(x + 34, y + 19, 13)
 
 
 def draw_stats_icon(x, y):
+    # Bar chart
     display.set_pen(BLACK)
-    display.line(x + 12, y + 27, x + 22, y + 37)
-    display.line(x + 22, y + 37, x + 41, y + 14)
+    display.rectangle(x + 11, y + 29, 7, 10)
+    display.rectangle(x + 23, y + 20, 7, 19)
+    display.rectangle(x + 35, y + 12, 7, 27)
+
+    display.line(x + 8, y + 40, x + 45, y + 40)
 
 
 def get_selected_action():
@@ -107,19 +154,22 @@ def get_selected_action():
 
 
 def get_pet_state():
+    if(
+        byte.hunger >= 80
+        and byte.energy >= 80
+        and byte.cleanliness >= 80
+        and byte.happiness >= 80
+    ):
+        return "perfect"
     if byte.hunger < 30:
         return "hungry"
-
     if byte.energy < 30:
         return "tired"
-
     if byte.cleanliness < 30:
         return "dirty"
-
-    if byte.happiness < 30:
+    if byte.happiness < 30 :
         return "play"
-
-    return "perfect"
+    return "normal"
 
 
 def draw_pet_face(state):
@@ -391,12 +441,13 @@ while True:
             display.text(message, 105, 155, scale=2)
             message_timer -= 1
         else:
-            display.text(
-                get_pet_message(pet_state),
-                85,
-                155,
-                scale=2
-            )
+            # display.text(
+            #     get_pet_message(pet_state),
+            #     85,
+            #     155,
+            #     scale=2
+            # )
+            pass
 
     draw_action_boxes()
 
