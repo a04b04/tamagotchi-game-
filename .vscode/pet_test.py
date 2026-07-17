@@ -26,6 +26,14 @@ BLUE = display.create_pen(0, 120, 255)
 LIGHT_GREY = display.create_pen(220, 220, 220)
 PET_COLOUR = display.create_pen(73, 216, 230)
 
+WALL = display.create_pen(220, 240, 255)
+FLOOR = display.create_pen(205, 170, 120)
+SKIRTING = display.create_pen(150, 110, 70)
+WINDOW_BLUE = display.create_pen(170, 220, 255)
+WINDOW_FRAME = display.create_pen(90, 120, 150)
+PLANT_GREEN = display.create_pen(80, 170, 90)
+PLANT_POT = display.create_pen(180, 110, 70)
+
 cursor_x = 145
 cursor_y = 100
 cursor_size = 12
@@ -326,6 +334,43 @@ def show_pet_image(state):
     # Coods depend on image size 
     jpeg.decode(100, 45)
 
+def draw_background():
+    # Wall
+    display.set_pen(WALL)
+    display.clear()
+
+    # Window
+    display.set_pen(WINDOW_FRAME)
+    display.rectangle(20, 35, 65, 55)
+
+    display.set_pen(WINDOW_BLUE)
+    display.rectangle(24, 39, 57, 47)
+
+    display.set_pen(WINDOW_FRAME)
+    display.rectangle(50, 39, 4, 47)
+    display.rectangle(24, 61, 57, 4)
+
+    # Small plant
+    display.set_pen(PLANT_POT)
+    display.rectangle(268, 130, 24, 25)
+
+    display.set_pen(PLANT_GREEN)
+    display.circle(274, 128, 9)
+    display.circle(286, 125, 10)
+    display.circle(280, 116, 9)
+
+    # Skirting board
+    display.set_pen(SKIRTING)
+    display.rectangle(0, 158, WIDTH, 6)
+
+    # Floor
+    display.set_pen(FLOOR)
+    display.rectangle(0, 164, WIDTH, 16)
+
+    # Simple floor lines
+    display.set_pen(SKIRTING)
+    display.line(0, 172, WIDTH, 172)
+
 while True:
     # Cursor movement
     if button_left.is_pressed:
@@ -398,8 +443,7 @@ while True:
     pet_state = get_pet_state()
 
     # Draw background
-    display.set_pen(WHITE)
-    display.clear()
+    draw_background()
 
     display.set_pen(BLACK)
     display.text("BYTE", 130, 8, scale=3)
