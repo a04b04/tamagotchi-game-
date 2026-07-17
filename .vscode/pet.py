@@ -8,6 +8,8 @@ class Pet:
         self.energy = 60
         self.cleanliness = 60
 
+        self.alive = True
+
     def feed(self):
         self.hunger += 5
 
@@ -56,3 +58,12 @@ class Pet:
             new_value = 0
 
         setattr(self, stat_to_decrease, new_value)
+
+    def check_alive(self):
+        if (
+            self.hunger <= 0
+            or self.happiness <= 0
+            or self.energy <= 0
+            or self.cleanliness <= 0
+        ):
+            self.alive = False

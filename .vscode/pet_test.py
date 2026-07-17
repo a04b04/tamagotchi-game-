@@ -162,21 +162,26 @@ def get_selected_action():
 
 
 def get_pet_state():
-    if(
+    if not byte.alive:
+        return "dead"
+
+    if (
         byte.hunger >= 80
         and byte.energy >= 80
         and byte.cleanliness >= 80
         and byte.happiness >= 80
     ):
         return "perfect"
+
     if byte.hunger < 30:
         return "hungry"
     if byte.energy < 30:
         return "tired"
     if byte.cleanliness < 30:
         return "dirty"
-    if byte.happiness < 30 :
+    if byte.happiness < 30:
         return "play"
+
     return "normal"
 
 
@@ -314,7 +319,10 @@ def get_pet_message(state):
     return "I'm perfect!"
 
 def show_pet_image(state):
-    if state == "hungry":
+    if state == "dead":
+        image_name = "deaddog.jpeg"
+
+    elif state == "hungry":
         image_name = "image.jpeg"
 
     elif state == "tired":
@@ -330,9 +338,7 @@ def show_pet_image(state):
         image_name = "normaldog.jpeg"
 
     jpeg.open_file(image_name)
-
-    # Coods depend on image size 
-    jpeg.decode(100, 35)
+    jpeg.decode(100, 30)
 
 def draw_background():
     # Wall
@@ -398,6 +404,21 @@ while True:
     if cursor_y > HEIGHT - cursor_size:
         cursor_y = HEIGHT - cursor_size
 
+    if not byte.alive:
+        draw_background()
+
+        display.set_pen(BLACK)
+        display.text("BYTE DIED", 85, 8, scale=3)
+
+        show_pet_image("dead")
+
+        display.set_pen(BLACK)
+        display.text("BYTE DIED", 90, 155, scale=2)
+
+        display.update()
+        sleep(0.02)
+        continue
+
     # Decrease one random stat every 5 seconds
     current_time = ticks_ms()
 
@@ -406,6 +427,7 @@ while True:
         last_stat_decrease
     ) >= stat_decrease_interval:
         byte.decrease_stats()
+        byte.check_alive()
         last_stat_decrease = current_time
 
     # Handle B selection
