@@ -1,3 +1,5 @@
+import jpegdec
+
 from time import sleep, ticks_ms, ticks_diff
 from pet import Pet
 
@@ -7,6 +9,8 @@ from pimoroni import Button
 
 display = PicoGraphics(display=DISPLAY_TUFTY_2040)
 display.set_backlight(1.0)
+
+jpeg = jpegdec.JPEG(display)
 
 button_left = Button(7, invert=False)      # A
 button_select = Button(8, invert=False)    # B
@@ -251,6 +255,26 @@ def get_pet_message(state):
 
     return "I'm perfect!"
 
+def show_pet_image(state):
+    if state == "hungry":
+        image_name = "image.jpeg"
+
+    elif state == "tired":
+        image_name = "dogtired.jpeg"
+
+    elif state == "dirty":
+        image_name = "dirtydog.jpeg"
+
+    elif state == "perfect":
+        image_name = "perfectdog.jpeg"
+
+    else:
+        image_name = "normaldog.jpeg"
+
+    jpeg.open_file(image_name)
+
+    # Coods depend on image size 
+    jpeg.decode(100, 45)
 
 while True:
     # Cursor movement
@@ -359,7 +383,7 @@ while True:
         message_timer -= 1
 
     else:
-        draw_pet_face(pet_state)
+        show_pet_image(pet_state)
 
         display.set_pen(BLACK)
 
