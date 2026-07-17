@@ -332,7 +332,7 @@ def show_pet_image(state):
     jpeg.open_file(image_name)
 
     # Coods depend on image size 
-    jpeg.decode(100, 45)
+    jpeg.decode(100, 35)
 
 def draw_background():
     # Wall
