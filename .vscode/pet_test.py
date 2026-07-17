@@ -472,26 +472,26 @@ while True:
 
     if message == "stats" and message_timer > 0:
         display.text(
-            "Hunger: " + str(byte.hunger),
-            10,
-            45,
-            scale=2
+        "Hunger: " + str(byte.hunger),
+        95,
+        45,
+        scale=2
         )
         display.text(
             "Happy: " + str(byte.happiness),
-            10,
+            95,
             70,
             scale=2
         )
         display.text(
             "Energy: " + str(byte.energy),
-            10,
+            95,
             95,
             scale=2
         )
         display.text(
             "Clean: " + str(byte.cleanliness),
-            10,
+            95,
             120,
             scale=2
         )
